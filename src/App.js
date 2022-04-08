@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Header from './components/Header'
+import AddTodo from './components/AddTodo'
 
 function App() {
+  const [todos, setTodos] = useState(() => {
+    return localStorage.getItem('todos') === null ? [] : JSON.parse(localStorage.getItem('todos'))
+  })
+
+  const handleAdd = (todo) => {
+    setTodos([...todos, todo])
+  }
+
+  const handleDelete = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header />
+      <AddTodo addTodo={handleAdd} />
+      <ul className='todolist'>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            <span>{todo.title}</span>
+            <button onClick={() => handleDelete(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
