@@ -13,7 +13,12 @@ ul {
   margin: 0 auto;
 }
 
-input {
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+input[type='text'] {
   padding: 7px 10px;
   width: 100%;
   border: 1px solid #ccc;
@@ -29,6 +34,7 @@ input {
 
 .todolist li span {
   font-size: 16px;
+  margin-left: 10px;
 }
 
 .todolist li button {
@@ -38,4 +44,8 @@ input {
   color: #fff;
   padding: 7px 20px;
   cursor: pointer;
+}
+
+input[type='checkbox']:checked + span {
+  text-decoration: line-through;
 }
